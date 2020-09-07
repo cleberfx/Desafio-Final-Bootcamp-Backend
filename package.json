@@ -13,6 +13,7 @@
   "devDependencies": {
     "nodemon": "2.0.4"
   },
+  "type": "module",
   "scripts": {
     "server": "nodemon index.js",
     "start": "node index.js",
@@ -24,6 +25,6 @@
     ]
   },
   "engines": {
-    "node": "12.9.1"
+    "node": "12.18.3"
   }
 }
