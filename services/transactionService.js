@@ -7,31 +7,31 @@
 // // descobrir esse erro :-/
 // const TransactionModel = require('../models/TransactionModel');
 
-import { db } from '../models/index.js';
+import { db } from '../models/db.js';
 import { logger } from '../config/logger.js';
 
-const Grade = db.grade;
+const Transaction = db.transaction;
 
 const create = async (req, res) => {
-  const grade = new Grade({
+  const transaction = new Transaction({
     name: req.body.name,
     subject: req.body.subject,
     type: req.body.type,
     value: req.body.value,
   });
   try {
-    const data = await grade.save();
-    res.send({ message: 'Grade inserido com sucesso' + data });
-    logger.info(`POST /grade - ${JSON.stringify()}`);
+    const data = await transaction.save();
+    res.send({ message: 'Transaction inserido com sucesso' + data });
+    logger.info(`POST /transaction - ${JSON.stringify()}`);
   } catch (error) {
     res
       .status(500)
       .send({ message: error.message || 'Algum erro ocorreu ao salvar' });
-    logger.error(`POST /grade - ${JSON.stringify(error.message)}`);
+    logger.error(`POST /transaction - ${JSON.stringify(error.message)}`);
   }
 };
 
-const findAll = async (req, res) => {
+const findAllByDescription = async (req, res) => {
   const name = req.query.name;
 
   //condicao para o filtro no findAll
@@ -40,40 +40,60 @@ const findAll = async (req, res) => {
     : {};
 
   try {
-    const data = await Grade.find(condition);
+    const data = await Transaction.find(condition);
 
     if (!data) {
-      res.status(404).send({ message: 'Nao encontrado nenhuma nota' });
+      res.status(404).send({ message: 'Nao encontrado nenhuma registro' });
     } else {
       res.send(data);
     }
-    logger.info(`GET /grade`);
+    logger.info(`GET /transaction`);
   } catch (error) {
     res
       .status(500)
       .send({ message: error.message || 'Erro ao listar todos os documentos' });
-    logger.error(`GET /grade - ${JSON.stringify(error.message)}`);
+    logger.error(`GET /transaction - ${JSON.stringify(error.message)}`);
   }
 };
+const findAllByDate = async (req, res) => {
+  const yearMonth = req.params.yearMonth;
 
+  
+
+  try {
+    const data = await Transaction.findOne({yearMonth:yearMonth});
+
+    if (!data) {
+      res.status(404).send({ message: 'Nao encontrado nenhuma registro' });
+    } else {
+      res.send(data);
+    }
+    logger.info(`GET /transaction`);
+  } catch (error) {
+    res
+      .status(500)
+      .send({ message: error.message || 'Erro ao listar todos os documentos' });
+    logger.error(`GET /transaction - ${JSON.stringify(error.message)}`);
+  }
+};
 const findOne = async (req, res) => {
   const id = req.params.id;
 
   try {
-    const data = await Grade.findById({ _id: id });
+    const data = await Transaction.findById({ _id: id });
 
     if (!data) {
       res
         .status(404)
-        .send({ message: 'Nao encontrado nenhuma nota com id: ' + id });
+        .send({ message: 'Nao encontrado nenhuma registro com id: ' + id });
     } else {
       res.send(data);
     }
 
-    logger.info(`GET /grade - ${id}`);
+    logger.info(`GET /transaction - ${id}`);
   } catch (error) {
-    res.status(500).send({ message: 'Erro ao buscar o Grade id: ' + id });
-    logger.error(`GET /grade - ${JSON.stringify(error.message)}`);
+    res.status(500).send({ message: 'Erro ao buscar o Transaction id: ' + id });
+    logger.error(`GET /transaction - ${JSON.stringify(error.message)}`);
   }
 };
 
@@ -87,22 +107,22 @@ const update = async (req, res) => {
   const id = req.params.id;
 
   try {
-    const data = await Grade.findByIdAndUpdate({ _id: id }, req.body, {
+    const data = await Transaction.findByIdAndUpdate({ _id: id }, req.body, {
       new: true,
     });
 
     if (!data) {
       res
         .status(404)
-        .send({ message: 'Nao encontrado nenhuma nota para atualizar' });
+        .send({ message: 'Nao encontrado nenhuma registro para atualizar' });
     } else {
       res.send(data);
     }
 
-    logger.info(`PUT /grade - ${id} - ${JSON.stringify(req.body)}`);
+    logger.info(`PUT /transaction - ${id} - ${JSON.stringify(req.body)}`);
   } catch (error) {
-    res.status(500).send({ message: 'Erro ao atualizar a Grade id: ' + id });
-    logger.error(`PUT /grade - ${JSON.stringify(error.message)}`);
+    res.status(500).send({ message: 'Erro ao atualizar a Transaction id: ' + id });
+    logger.error(`PUT /transaction - ${JSON.stringify(error.message)}`);
   }
 };
 
@@ -110,41 +130,41 @@ const remove = async (req, res) => {
   const id = req.params.id;
 
   try {
-    const data = await Grade.findByIdAndRemove({ _id: id });
+    const data = await Transaction.findByIdAndRemove({ _id: id });
 
     if (!data) {
       res
         .status(404)
-        .send({ message: 'Nao encontrado nenhuma nota para excluir' });
+        .send({ message: 'Nao encontrado nenhuma registro para excluir' });
     } else {
-      res.send('Nota excluido com sucesso');
+      res.send('Registro excluido com sucesso');
     }
 
-    logger.info(`DELETE /grade - ${id}`);
+    logger.info(`DELETE /transaction - ${id}`);
   } catch (error) {
     res
       .status(500)
-      .send({ message: 'Nao foi possivel deletar o Grade id: ' + id });
-    logger.error(`DELETE /grade - ${JSON.stringify(error.message)}`);
+      .send({ message: 'Nao foi possivel deletar o Transaction id: ' + id });
+    logger.error(`DELETE /transaction - ${JSON.stringify(error.message)}`);
   }
 };
 
 const removeAll = async (req, res) => {
   try {
-    const data = await Grade.deleteMany();
+    const data = await Transaction.deleteMany();
 
     if (!data) {
       res
         .status(404)
-        .send({ message: 'Nao encontrada nenhuma nota para excluir' });
+        .send({ message: 'Nao encontrada nenhuma registro para excluir' });
     } else {
-      res.send('Notas excluidas com sucesso');
+      res.send('Registros excluidas com sucesso');
     }
 
-    logger.info(`DELETE /grade`);
+    logger.info(`DELETE /transaction`);
   } catch (error) {
-    res.status(500).send({ message: 'Erro ao excluir todos as Grades' });
-    logger.error(`DELETE /grade - ${JSON.stringify(error.message)}`);
+    res.status(500).send({ message: 'Erro ao excluir todos as Transactions' });
+    logger.error(`DELETE /transaction - ${JSON.stringify(error.message)}`);
   }
 };
 
