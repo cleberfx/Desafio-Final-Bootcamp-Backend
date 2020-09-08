@@ -1,0 +1,36 @@
+#
+POST http://localhost:8081/transaction/
+Content-Type: application/json
+
+{
+"description":"xisto",
+"value": 100,
+"category": "xisto",
+"type": "-"
+
+
+}
+###
+
+
+
+
+
+DELETE http://localhost:8081/transaction/5f537f22de9b6f001791377
+
+###
+PUT http://localhost:8081/transaction/5f537f22de9b6f001791377
+Content-Type: application/json
+
+{
+
+
+
+}
+###
+get http://localhost:8081/transaction/2019-01
+
+###
+get http://localhost:8081/transaction/
+
+###

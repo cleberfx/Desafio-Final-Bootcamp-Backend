@@ -14,10 +14,10 @@ const Transaction = db.transaction;
 
 const create = async (req, res) => {
   const transaction = new Transaction({
-    name: req.body.name,
-    subject: req.body.subject,
-    type: req.body.type,
+    description: req.body.description,
     value: req.body.value,
+    category: req.body.category,
+    type: req.body.type,
   });
   try {
     const data = await transaction.save();
@@ -57,11 +57,9 @@ const findAllByDescription = async (req, res) => {
 };
 const findAllByDate = async (req, res) => {
   const yearMonth = req.params.yearMonth;
-
-  
-
+  console.log(yearMonth);
   try {
-    const data = await Transaction.findOne({yearMonth:yearMonth});
+    const data = await Transaction.find({ yearMonth: yearMonth });
 
     if (!data) {
       res.status(404).send({ message: 'Nao encontrado nenhuma registro' });
@@ -121,7 +119,9 @@ const update = async (req, res) => {
 
     logger.info(`PUT /transaction - ${id} - ${JSON.stringify(req.body)}`);
   } catch (error) {
-    res.status(500).send({ message: 'Erro ao atualizar a Transaction id: ' + id });
+    res
+      .status(500)
+      .send({ message: 'Erro ao atualizar a Transaction id: ' + id });
     logger.error(`PUT /transaction - ${JSON.stringify(error.message)}`);
   }
 };
@@ -168,4 +168,12 @@ const removeAll = async (req, res) => {
   }
 };
 
-export default { create, findAll, findOne, update, remove, removeAll };
+export default {
+  create,
+  findAllByDescription,
+  findOne,
+  update,
+  remove,
+  removeAll,
+  findAllByDate,
+};

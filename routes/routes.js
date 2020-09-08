@@ -1,13 +1,14 @@
 import express from 'express';
-import transation from '../m';
+import transaction from '../services/transactionService.js';
 
 const app = express();
 
-app.post('/transation', transation.create);
-app.get('/transation', transation.findAll);
-app.get('/transation/:id', transation.findOne);
-app.put('/transation/:id', transation.update);
-app.delete('/transation/:id', transation.remove);
-app.delete('/transation', transation.removeAll);
+app.post('/transaction', transaction.create);
+app.get('/transaction', transaction.findAllByDescription);
+app.get('/transaction/:yearMonth', transaction.findAllByDate);
+// app.get('/transation/:id', transation.findOne);
+app.put('/transaction/:id', transaction.update);
+app.delete('/transaction/:id', transaction.remove);
+app.delete('/transaction', transaction.removeAll);
 
-export { app as transationRouter };
+export { app as transactionRouter };
