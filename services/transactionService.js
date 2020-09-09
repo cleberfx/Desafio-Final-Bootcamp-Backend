@@ -13,16 +13,60 @@ import { logger } from '../config/logger.js';
 const Transaction = db.transaction;
 
 const create = async (req, res) => {
+  let date = new Date();
+  let year = date.getFullYear();
+  let month = date.getMonth() + 1;
+  let day = date.getDate();
+  let yearMonth = (function () {
+    let date = new Date();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+
+    if (month < 10) {
+      month = '0' + month;
+    }
+    if (year < 10) {
+      year = '0' + day;
+    }
+
+    let yM = year + '-' + month;
+    return yM;
+  })();
+
+  let yearMonthDay = (function () {
+    let date = new Date();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    let day = date.getDate();
+    if (year < 10) {
+      year = '0' + year;
+    }
+    if (month < 10) {
+      month = '0' + month;
+    }
+    if (day < 10) {
+      day = '0' + day;
+    }
+
+    let yMD = year + '-' + month + '-' + day;
+    return yMD;
+  })();
+
   const transaction = new Transaction({
     description: req.body.description,
     value: req.body.value,
     category: req.body.category,
+    year: year,
+    month: month,
+    day: day,
+    yearMonth: yearMonth,
+    yearMonthDay: yearMonthDay,
     type: req.body.type,
   });
   try {
     const data = await transaction.save();
-    res.send({ message: 'Transaction inserido com sucesso' + data });
-    logger.info(`POST /transaction - ${JSON.stringify()}`);
+    res.send(data);
+    logger.info(`POST /transaction`);
   } catch (error) {
     res
       .status(500)

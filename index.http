@@ -16,15 +16,15 @@ Content-Type: application/json
 
 
 
-DELETE http://localhost:8081/transaction/5f537f22de9b6f001791377
+DELETE http://localhost:8081/transaction/5f58324205385597b67466a3
 
 ###
-PUT http://localhost:8081/transaction/5f537f22de9b6f001791377
+PUT http://localhost:8081/transaction/5f58324205385597b67466a3
 Content-Type: application/json
 
 {
 
-
+"value": 700
 
 }
 ###
