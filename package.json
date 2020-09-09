@@ -18,12 +18,11 @@
   "type": "module",
   "scripts": {
     "server": "nodemon -r dotenv/config --experimental-modules index.js",
-    "start": "nodemon -r dotenv/config --experimental-modules index.js",
-    
+    "start": "nodemon -r dotenv/config --experimental-modules index.js"
   },
   "nodemonConfig": {
     "ignore": [
-      "client/"
+      ""
     ]
   },
   "engines": {
