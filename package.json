@@ -19,7 +19,7 @@
   "scripts": {
     "server": "nodemon -r dotenv/config --experimental-modules index.js",
     "start": "nodemon -r dotenv/config --experimental-modules index.js",
-    "heroku-postbuild": "cd client && npm install && npm run build"
+    
   },
   "nodemonConfig": {
     "ignore": [
