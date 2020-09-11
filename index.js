@@ -91,11 +91,11 @@ const app = express();
 //define dominio de origem para consumo do servico
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(
-//   cors({
-//     origin: 'https://grades-app-cleber.herokuapp.com',
-//   })
-// );
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+  })
+);
 app.use(transactionRouter);
 
 app.get('/', (req, res) => {
