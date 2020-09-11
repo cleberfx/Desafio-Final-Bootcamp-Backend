@@ -93,7 +93,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin:
+      'https://3000-dbb47233-7783-4d1f-b4a5-e7c1a9244b97.ws-us02.gitpod.io',
   })
 );
 app.use(transactionRouter);
