@@ -121,7 +121,7 @@ const findAllByDate = async (req, res) => {
 
 const findAllByYear = async (req, res) => {
   let year = req.params.year;
-  let strYear = year.toString();
+  let strYear = Number(year);
   console.log(strYear);
   try {
     const data = await Transaction.find({ year: strYear });

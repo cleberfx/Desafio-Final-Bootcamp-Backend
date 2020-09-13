@@ -33,10 +33,10 @@ Content-Type: application/json
 
 }
 ###
-get http://localhost:8081/transaction/2019-01
+get http://localhost:8081/transaction/yearMonth/2019-01
 
 ###
-get http://localhost:8081/transaction/2019
+get http://localhost:8081/transaction/year/2020
 
 ###
 get http://localhost:8081/transaction/
