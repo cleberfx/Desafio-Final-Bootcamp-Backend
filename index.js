@@ -91,12 +91,12 @@ const app = express();
 //define dominio de origem para consumo do servico
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(
-  cors({
-    origin:
-      'https://3000-dbb47233-7783-4d1f-b4a5-e7c1a9244b97.ws-us02.gitpod.io',
-  })
-);
+// app.use(
+//   cors({
+//     origin:
+//       'https://3000-dbb47233-7783-4d1f-b4a5-e7c1a9244b97.ws-us02.gitpod.io',
+//   })
+// );
 app.use(transactionRouter);
 
 app.get('/', (req, res) => {

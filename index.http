@@ -6,6 +6,11 @@ Content-Type: application/json
 "description":"xisto",
 "value": 100,
 "category": "xisto",
+"year": 2020,
+"month": 5,
+"day": 5,
+"yearMonth": "2020-05"
+"yearMonthDay": "2020-05-05"
 "type": "-"
 
 
@@ -29,6 +34,9 @@ Content-Type: application/json
 }
 ###
 get http://localhost:8081/transaction/2019-01
+
+###
+get http://localhost:8081/transaction/2019
 
 ###
 get http://localhost:8081/transaction/

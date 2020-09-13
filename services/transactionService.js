@@ -56,11 +56,11 @@ const create = async (req, res) => {
     description: req.body.description,
     value: req.body.value,
     category: req.body.category,
-    year: year,
-    month: month,
-    day: day,
-    yearMonth: yearMonth,
-    yearMonthDay: yearMonthDay,
+    year: req.body.year,
+    month: req.body.month,
+    day: req.body.day,
+    yearMonth: req.body.yearMonth,
+    yearMonthDay: req.body.yearMonthDay,
     type: req.body.type,
   });
   try {
@@ -118,6 +118,28 @@ const findAllByDate = async (req, res) => {
     logger.error(`GET /transaction - ${JSON.stringify(error.message)}`);
   }
 };
+
+const findAllByYear = async (req, res) => {
+  let year = req.params.year;
+  let strYear = year.toString();
+  console.log(strYear);
+  try {
+    const data = await Transaction.find({ year: strYear });
+
+    if (!data) {
+      res.status(404).send({ message: 'Nao encontrado nenhuma registro' });
+    } else {
+      res.send(data);
+    }
+    logger.info(`GET /transaction`);
+  } catch (error) {
+    res
+      .status(500)
+      .send({ message: error.message || 'Erro ao listar todos os documentos' });
+    logger.error(`GET /transaction - ${JSON.stringify(error.message)}`);
+  }
+};
+
 const findOne = async (req, res) => {
   const id = req.params.id;
 
@@ -220,4 +242,5 @@ export default {
   remove,
   removeAll,
   findAllByDate,
+  findAllByYear,
 };
